@@ -17,14 +17,12 @@ import org.apache.jena.query.*;
 public class GPUService {
 	@Autowired
 	private PSUService psuService;
-
     public GPU getOne(String title){
         String selectString = SparqlStaticFields.Prefix +
                 "SELECT ?title ?gpu_chipset ?gpu_memory ?gpu_clock ?gpu_memory_clock ?gpu_recw ?gpu_power_usage ?gpu_connector ?gpu_hashrate ?gpu_vga_ports ?gpu_memory_type ?gpu_dp_ports ?gpu_boost_clock ?gpu_dvi_ports ?gpu_hdmi_ports \n" +
                 "\tWHERE {\n" +
                 "?gpu rdf:type iz:GPU .\n" +
                 "?gpu iz:title \"" + title + "\".\n" +
-                "?gpu rdf:type iz:GPU .\n" +
                 "OPTIONAL {?gpu iz:title  ?title .}\n" +
                 "OPTIONAL {?gpu iz:gpu_chipset  ?gpu_chipset .}\n" +
                 "OPTIONAL {?gpu iz:gpu_memory ?gpu_memory .}\n" +
@@ -49,19 +47,19 @@ public class GPUService {
             QuerySolution solution = results.nextSolution();
             gpu.setTitle((solution.getLiteral("title") != null) ? solution.getLiteral("title").getString() : null);
             gpu.setChipset((solution.getLiteral("gpu_chipset") != null) ? solution.getLiteral("gpu_chipset").getString() : null);
-            gpu.setMemory((solution.getLiteral("gpu_memory") != null) ? solution.getLiteral("gpu_memory").getInt() : -1);
+            gpu.setMemory((solution.getLiteral("gpu_memory") != null) ? solution.getLiteral("gpu_memory").getInt() : null);
             gpu.setMemoryType((solution.getLiteral("gpu_memory_type") != null) ? solution.getLiteral("gpu_memory_type").getString() : null);
-            gpu.setMemoryClock((solution.getLiteral("gpu_memory_clock") != null) ? solution.getLiteral("gpu_memory_clock").getInt() : -1);
-            gpu.setClock((solution.getLiteral("gpu_clock") != null) ? solution.getLiteral("gpu_clock").getInt() : -1);
-            gpu.setBoostClock((solution.getLiteral("gpu_boost_clock") != null) ? solution.getLiteral("gpu_boost_clock").getInt() : -1);
+            gpu.setMemoryClock((solution.getLiteral("gpu_memory_clock") != null) ? solution.getLiteral("gpu_memory_clock").getInt() : null);
+            gpu.setClock((solution.getLiteral("gpu_clock") != null) ? solution.getLiteral("gpu_clock").getInt() : null);
+            gpu.setBoostClock((solution.getLiteral("gpu_boost_clock") != null) ? solution.getLiteral("gpu_boost_clock").getInt() : null);
             gpu.setPowerUsage((solution.getLiteral("gpu_power_usage") != null) ? solution.getLiteral("gpu_power_usage").getInt() : null);
             gpu.setConnector((solution.getLiteral("gpu_connector") != null) ? solution.getLiteral("gpu_connector").getString() : null);
-            gpu.setDpPorts((solution.getLiteral("gpu_dp_ports") != null) ? solution.getLiteral("gpu_dp_ports").getInt() : -1);
-            gpu.setHdmiPorts((solution.getLiteral("gpu_hdmi_ports") != null) ? solution.getLiteral("gpu_hdmi_ports").getInt() : -1);
-            gpu.setDviPorts((solution.getLiteral("gpu_dvi_ports") != null) ? solution.getLiteral("gpu_dvi_ports").getInt() : -1);
-            gpu.setVgaPorts((solution.getLiteral("gpu_vga_ports") != null) ? solution.getLiteral("gpu_vga_ports").getInt() : -1);
-            gpu.setHashRate((solution.getLiteral("gpu_hashrate") != null) ? solution.getLiteral("gpu_hashrate").getFloat() : -1);
-            gpu.setRecWattage((solution.getLiteral("gpu_recw") != null) ? solution.getLiteral("gpu_recw").getInt() : -1);
+            gpu.setDpPorts((solution.getLiteral("gpu_dp_ports") != null) ? solution.getLiteral("gpu_dp_ports").getInt() : null);
+            gpu.setHdmiPorts((solution.getLiteral("gpu_hdmi_ports") != null) ? solution.getLiteral("gpu_hdmi_ports").getInt() : null);
+            gpu.setDviPorts((solution.getLiteral("gpu_dvi_ports") != null) ? solution.getLiteral("gpu_dvi_ports").getInt() : null);
+            gpu.setVgaPorts((solution.getLiteral("gpu_vga_ports") != null) ? solution.getLiteral("gpu_vga_ports").getInt() : null);
+            gpu.setHashRate((solution.getLiteral("gpu_hashrate") != null) ? solution.getLiteral("gpu_hashrate").getFloat() : null);
+            gpu.setRecWattage((solution.getLiteral("gpu_recw") != null) ? solution.getLiteral("gpu_recw").getInt() : null);
         }
         return gpu;
     }
@@ -87,7 +85,7 @@ public class GPUService {
                 "OPTIONAL {?gpu iz:gpu_vga_ports ?gpu_vga_ports .}\n" +
                 "OPTIONAL {?gpu iz:gpu_hashrate ?gpu_hashrate .}\n" +
                 "}";
-        List<GPU> gpus = new ArrayList<GPU>();
+        List<GPU> gpus = new ArrayList<>();
         Query query = QueryFactory.create(selectString);
         QueryExecution q = QueryExecutionFactory.sparqlService(SparqlStaticFields.SELECT_URL, query);
         ResultSet results = q.execSelect();
@@ -96,19 +94,19 @@ public class GPUService {
             GPU gpu = new GPU();
             gpu.setTitle((solution.getLiteral("title") != null) ? solution.getLiteral("title").getString() : null);
             gpu.setChipset((solution.getLiteral("gpu_chipset") != null) ? solution.getLiteral("gpu_chipset").getString() : null);
-            gpu.setMemory((solution.getLiteral("gpu_memory") != null) ? solution.getLiteral("gpu_memory").getInt() : -1);
+            gpu.setMemory((solution.getLiteral("gpu_memory") != null) ? solution.getLiteral("gpu_memory").getInt() : null);
             gpu.setMemoryType((solution.getLiteral("gpu_memory_type") != null) ? solution.getLiteral("gpu_memory_type").getString() : null);
-            gpu.setMemoryClock((solution.getLiteral("gpu_memory_clock") != null) ? solution.getLiteral("gpu_memory_clock").getInt() : -1);
-            gpu.setClock((solution.getLiteral("gpu_clock") != null) ? solution.getLiteral("gpu_clock").getInt() : -1);
-            gpu.setBoostClock((solution.getLiteral("gpu_boost_clock") != null) ? solution.getLiteral("gpu_boost_clock").getInt() : -1);
+            gpu.setMemoryClock((solution.getLiteral("gpu_memory_clock") != null) ? solution.getLiteral("gpu_memory_clock").getInt() : null);
+            gpu.setClock((solution.getLiteral("gpu_clock") != null) ? solution.getLiteral("gpu_clock").getInt() : null);
+            gpu.setBoostClock((solution.getLiteral("gpu_boost_clock") != null) ? solution.getLiteral("gpu_boost_clock").getInt() : null);
             gpu.setPowerUsage((solution.getLiteral("gpu_power_usage") != null) ? solution.getLiteral("gpu_power_usage").getInt() : null);
             gpu.setConnector((solution.getLiteral("gpu_connector") != null) ? solution.getLiteral("gpu_connector").getString() : null);
-            gpu.setDpPorts((solution.getLiteral("gpu_dp_ports") != null) ? solution.getLiteral("gpu_dp_ports").getInt() : -1);
-            gpu.setHdmiPorts((solution.getLiteral("gpu_hdmi_ports") != null) ? solution.getLiteral("gpu_hdmi_ports").getInt() : -1);
-            gpu.setRecWattage((solution.getLiteral("gpu_recw") != null) ? solution.getLiteral("gpu_recw").getInt() : -1);
-            gpu.setDviPorts((solution.getLiteral("gpu_dvi_ports") != null) ? solution.getLiteral("gpu_dvi_ports").getInt() : -1);
-            gpu.setVgaPorts((solution.getLiteral("gpu_vga_ports") != null) ? solution.getLiteral("gpu_vga_ports").getInt() : -1);
-            gpu.setHashRate((solution.getLiteral("gpu_hashrate") != null) ? solution.getLiteral("gpu_hashrate").getFloat() : -1);
+            gpu.setDpPorts((solution.getLiteral("gpu_dp_ports") != null) ? solution.getLiteral("gpu_dp_ports").getInt() : null);
+            gpu.setHdmiPorts((solution.getLiteral("gpu_hdmi_ports") != null) ? solution.getLiteral("gpu_hdmi_ports").getInt() : null);
+            gpu.setRecWattage((solution.getLiteral("gpu_recw") != null) ? solution.getLiteral("gpu_recw").getInt() : null);
+            gpu.setDviPorts((solution.getLiteral("gpu_dvi_ports") != null) ? solution.getLiteral("gpu_dvi_ports").getInt() : null);
+            gpu.setVgaPorts((solution.getLiteral("gpu_vga_ports") != null) ? solution.getLiteral("gpu_vga_ports").getInt() : null);
+            gpu.setHashRate((solution.getLiteral("gpu_hashrate") != null) ? solution.getLiteral("gpu_hashrate").getFloat() : null);
             gpus.add(gpu);
         }
         return gpus;
@@ -116,9 +114,8 @@ public class GPUService {
     
     public List<GPU> getCompatibleGPU(String title){
     	PSU psu = psuService.getOne(title);
-    	List<GPU> all = getAll();
-    	List<GPU> gpuList = new ArrayList<GPU>();
-    	for(GPU gpu: all) {
+    	List<GPU> gpuList = new ArrayList<>();
+    	for(GPU gpu: getAll()) {
     		if((psu.getWattage() * 0.95) > gpu.getRecWattage()) {
     			gpuList.add(gpu);
     		}

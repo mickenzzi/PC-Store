@@ -27,7 +27,6 @@ public class PSUService {
 			    "\tWHERE {\n" +
                 "?psu rdf:type iz:PSU .\n" +
                 "?psu iz:title \"" + title + "\".\n" +
-                "?psu rdf:type iz:PSU .\n" +
                 "OPTIONAL {?psu iz:title  ?title .}\n" +
                 "OPTIONAL {?psu iz:psu_wattage  ?psu_wattage .}\n" +
                 "OPTIONAL {?psu iz:psu_type ?psu_type .}\n" +

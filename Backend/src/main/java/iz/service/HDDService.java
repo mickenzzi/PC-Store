@@ -22,7 +22,6 @@ public class HDDService {
 	                "\tWHERE {\n" +
 	                "?hdd rdf:type iz:HDD .\n" +
 	                "?hdd iz:title \"" + title + "\".\n" +
-	                "?hdd rdf:type iz:HDD .\n" +
 	                "OPTIONAL {?hdd iz:title  ?title .}\n" +
 	                "OPTIONAL {?hdd iz:storage_capacity  ?storage_capacity .}\n" +
 	                "OPTIONAL {?hdd iz:storage_type ?storage_type .}\n" +
@@ -55,7 +54,7 @@ public class HDDService {
 	                "OPTIONAL {?hdd iz:storage_rpm ?storage_rpm .}\n" +
 	                "OPTIONAL {?hdd iz:storage_sata_speed ?storage_sata_speed .}\n" +
 	                "}";
-	        List<HDD> hdds = new ArrayList<HDD>();
+	        List<HDD> hdds = new ArrayList<>();
 	        Query query = QueryFactory.create(selectString);
 	        QueryExecution q = QueryExecutionFactory.sparqlService(SparqlStaticFields.SELECT_URL, query);
 	        ResultSet results = q.execSelect();

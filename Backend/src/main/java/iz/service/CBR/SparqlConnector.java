@@ -24,22 +24,30 @@ import iz.service.SSDService;
 import ucm.gaia.jcolibri.cbrcore.CBRCase;
 import ucm.gaia.jcolibri.cbrcore.CaseBaseFilter;
 import ucm.gaia.jcolibri.cbrcore.Connector;
-import ucm.gaia.jcolibri.exception.InitializingException;
 
 @Service
 public class SparqlConnector implements Connector {
 	@Autowired
-	private CPUService cpuService;
+	private final CPUService cpuService;
 	@Autowired
-	private GPUService gpuService;
+	private final GPUService gpuService;
 	@Autowired
-	private HDDService hddService;
+	private final HDDService hddService;
 	@Autowired
-	private MotherboardService motherboardService;
+	private final MotherboardService motherboardService;
 	@Autowired
-	private RAMService ramService;
+	private final RAMService ramService;
 	@Autowired
-	private SSDService ssdService;
+	private final SSDService ssdService;
+
+	public SparqlConnector(CPUService cpuService, GPUService gpuService, HDDService hddService, MotherboardService motherboardService, RAMService ramService, SSDService ssdService) {
+		this.cpuService = cpuService;
+		this.gpuService = gpuService;
+		this.hddService = hddService;
+		this.motherboardService = motherboardService;
+		this.ramService = ramService;
+		this.ssdService = ssdService;
+	}
 
 	@Override
 	public void close() {
@@ -54,7 +62,7 @@ public class SparqlConnector implements Connector {
 	}
 
 	@Override
-	public void initFromXMLfile(URL arg0) throws InitializingException {
+	public void initFromXMLfile(URL arg0) {
 		// TODO Auto-generated method stub
 
 	}
@@ -62,13 +70,13 @@ public class SparqlConnector implements Connector {
 	@Override
 	public Collection<CBRCase> retrieveAllCases() {
 		int ct = 0;
-		List<CBRCase> cbrs = new ArrayList<CBRCase>();
-		List<CPU> cpuList = new ArrayList<CPU>();
-		List<GPU> gpuList = new ArrayList<GPU>();
-		List<HDD> hddList = new ArrayList<HDD>();
-		List<Motherboard> moboList = new ArrayList<Motherboard>();
-		List<RAM> ramList = new ArrayList<RAM>();
-		List<SSD> ssdList = new ArrayList<SSD>();
+		List<CBRCase> cbrs = new ArrayList<>();
+		List<CPU> cpuList;
+		List<GPU> gpuList;
+		List<HDD> hddList;
+		List<Motherboard> moboList;
+		List<RAM> ramList;
+		List<SSD> ssdList;
 
 		cpuList = cpuService.getAll();
 		gpuList = gpuService.getAll();
@@ -83,17 +91,13 @@ public class SparqlConnector implements Connector {
 			pc.setCpu(cpu);
 			if (ct >= gpuList.size()) {
 				pc.setGpu(gpuList.get(0));
-				;
 			} else {
 				pc.setGpu(gpuList.get(ct));
-				;
 			}
 			if (ct >= hddList.size()) {
 				pc.setHdd(hddList.get(0));
-				;
 			} else {
 				pc.setHdd(hddList.get(ct));
-				;
 			}
 			if (ct >= moboList.size()) {
 				pc.setMotherboard(moboList.get(0));

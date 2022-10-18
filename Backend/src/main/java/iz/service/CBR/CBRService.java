@@ -33,11 +33,15 @@ import ucm.gaia.jcolibri.method.retrieve.selection.SelectCases;
 @Service
 public class CBRService implements StandardCBRApplication {
 	@Autowired
-	private SparqlConnector connector;
+	private final SparqlConnector connector;
 	private Connector _connector;
 	private CBRCaseBase _caseBase;
 	private NNConfig _simConfig;
 	private List<PersonalComputer> result;
+
+	public CBRService(SparqlConnector connector) {
+		this.connector = connector;
+	}
 
 	@Override
 	public void configure() throws ExecutionException {

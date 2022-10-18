@@ -55,7 +55,7 @@ public class SSDService {
 	                "OPTIONAL {?ssd iz:storage_rpm ?storage_rpm .}\n" +
 	                "OPTIONAL {?ssd iz:storage_sata_speed ?storage_sata_speed .}\n" +
 	                "}";
-	        List<SSD> ssdList = new ArrayList<SSD>();
+	        List<SSD> ssdList = new ArrayList<>();
 	        Query query = QueryFactory.create(selectString);
 	        QueryExecution q = QueryExecutionFactory.sparqlService(SparqlStaticFields.SELECT_URL, query);
 	        ResultSet results = q.execSelect();

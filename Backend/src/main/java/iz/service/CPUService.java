@@ -20,14 +20,13 @@ import iz.sparql.SparqlStaticFields;
 public class CPUService {
 	@Autowired
 	private MotherboardService motherboardService;
-	
+
 	public CPU getOne(String title) {
 		String selectString = SparqlStaticFields.Prefix +
 				"SELECT ?socket ?title ?cpu_core_clock ?cpu_core_count ?cpu_core_clock_boost ?cpu_series ?cpu_power_usage ?cpu_integrated_graphics \n" +
 			    "\tWHERE {\n" +
                 "?cpu rdf:type iz:CPU .\n" +
                 "?cpu iz:title \"" + title + "\".\n" +
-                "?cpu rdf:type iz:CPU .\n" +
                 "OPTIONAL {?cpu iz:title  ?title .}\n" +
                 "OPTIONAL {?cpu iz:socket  ?socket .}\n" +
                 "OPTIONAL {?cpu iz:cpu_core_clock ?cpu_core_clock .}\n" +
@@ -48,7 +47,7 @@ public class CPUService {
 			cpu.setSeries((solution.getLiteral("cpu_series") != null) ? solution.getLiteral("cpu_series").getString() : null);
 			cpu.setCoreCount((solution.getLiteral("cpu_core_count") != null) ? solution.getLiteral("cpu_core_count").getInt(): null);
 			cpu.setCoreClock((solution.getLiteral("cpu_core_clock") != null) ? solution.getLiteral("cpu_core_clock").getInt(): null);
-			cpu.setIntegratedGraphics((solution.getLiteral("cpu_integrated_graphics") != null) ? solution.getLiteral("cpu_integrated_graphics").getBoolean(): null);
+			cpu.setIntegratedGraphics(solution.getLiteral("cpu_integrated_graphics") == null || solution.getLiteral("cpu_integrated_graphics").getBoolean());
 			cpu.setCoreClockBoost((solution.getLiteral("cpu_core_clock_boost") != null) ? solution.getLiteral("cpu_core_clock_boost").getInt(): null);
 			cpu.setPowerUsage((solution.getLiteral("cpu_power_usage") != null) ? solution.getLiteral("cpu_power_usage").getInt(): null);
 		}
@@ -82,7 +81,7 @@ public class CPUService {
 			cpu.setSeries((solution.getLiteral("cpu_series") != null) ? solution.getLiteral("cpu_series").getString() : null);
 			cpu.setCoreCount((solution.getLiteral("cpu_core_count") != null) ? solution.getLiteral("cpu_core_count").getInt(): null);
 			cpu.setCoreClock((solution.getLiteral("cpu_core_clock") != null) ? solution.getLiteral("cpu_core_clock").getInt(): null);
-			cpu.setIntegratedGraphics((solution.getLiteral("cpu_integrated_graphics") != null) ? solution.getLiteral("cpu_integrated_graphics").getBoolean() : null);
+			cpu.setIntegratedGraphics(solution.getLiteral("cpu_integrated_graphics") == null || solution.getLiteral("cpu_integrated_graphics").getBoolean());
 			cpu.setCoreClockBoost((solution.getLiteral("cpu_core_clock_boost") != null) ? solution.getLiteral("cpu_core_clock_boost").getInt(): null);
 			cpu.setPowerUsage((solution.getLiteral("cpu_power_usage") != null) ? solution.getLiteral("cpu_power_usage").getInt(): null);
 			cpus.add(cpu);
@@ -96,9 +95,8 @@ public class CPUService {
 		if(socket.contains("4")) {
 			socket = "AM4";
 		}
-		List<CPU> all = getAll();
 		List<CPU> cpus = new ArrayList<>();
-		for(CPU cpu: all) {
+		for(CPU cpu: getAll()) {
 			if(cpu.getSocket().equals(socket)) {
 				cpus.add(cpu);
 			}
