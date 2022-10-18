@@ -1,6 +1,6 @@
 package iz.controller;
 
-import iz.dto.MotherboardCompatibleDTO;
+import iz.dto.MotherboardRequest;
 import iz.model.Motherboard;
 import iz.service.MotherboardService;
 
@@ -35,7 +35,7 @@ public class MotherboardController {
     }
 
     @PostMapping(value = "compatible", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Motherboard> GetCompatibleMotherboards(@RequestBody MotherboardCompatibleDTO dto) {
+    public List<Motherboard> GetCompatibleMotherboards(@RequestBody MotherboardRequest dto) {
         return motherboardService.getCompatibleMotherBoards(dto);
     }
 }

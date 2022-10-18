@@ -1,6 +1,6 @@
 package iz.controller;
 
-import iz.dto.RAMCompatibleDTO;
+import iz.dto.RAMRequest;
 import iz.model.RAM;
 import iz.service.RAMService;
 
@@ -35,7 +35,7 @@ public class RAMController {
     }
 
     @PostMapping(value = "compatible", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<RAM> getCompatibleRAM(@RequestBody RAMCompatibleDTO dto) {
+    public List<RAM> getCompatibleRAM(@RequestBody RAMRequest dto) {
         return ramService.getCompatibleRAM(dto.getMoboTitle());
     }
 }

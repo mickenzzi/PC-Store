@@ -2,7 +2,7 @@ package iz.controller;
 
 import java.util.List;
 
-import iz.dto.PSUCompatibleDTO;
+import iz.dto.PSURequest;
 import iz.model.PSU;
 import iz.service.PSUService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class PSUController {
     }
 
     @PostMapping(value = "compatible", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<PSU> getCompatibleGPU(@RequestBody PSUCompatibleDTO dto) {
+    public List<PSU> getCompatibleGPU(@RequestBody PSURequest dto) {
         return psuService.getCompatiblePSU(dto.getGpuTitle());
     }
 }

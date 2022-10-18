@@ -3,7 +3,7 @@ package iz.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import iz.dto.MotherboardCompatibleDTO;
+import iz.dto.MotherboardRequest;
 import iz.model.CPU;
 import iz.model.Motherboard;
 import iz.model.RAM;
@@ -114,7 +114,7 @@ public class MotherboardService {
         return motherboards;
     }
 	
-	public List<Motherboard> getCompatibleMotherBoards(MotherboardCompatibleDTO dto){
+	public List<Motherboard> getCompatibleMotherBoards(MotherboardRequest dto){
 		RAM ram = ramService.getOne(dto.getRamTitle());
 		CPU cpu = cpuService.getOne(dto.getCpuTitle());
 		String socket = cpu.getSocket();

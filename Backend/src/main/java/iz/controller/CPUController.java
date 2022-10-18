@@ -1,6 +1,6 @@
 package iz.controller;
 
-import iz.dto.CPUCompatibleDTO;
+import iz.dto.CPURequest;
 import iz.model.CPU;
 import iz.service.CPUService;
 
@@ -37,7 +37,7 @@ public class CPUController {
     }
 
     @PostMapping(value = "compatible", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CPU> getCompatibleCPU(@RequestBody CPUCompatibleDTO dto) {
+    public List<CPU> getCompatibleCPU(@RequestBody CPURequest dto) {
         return cpuService.getCompatibleCPUS(dto.getMoboTitle());
     }
 

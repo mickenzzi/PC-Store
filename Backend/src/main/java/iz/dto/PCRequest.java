@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PCInputDTO {
+public class PCRequest {
 	 private String cpuTitle;
 	 private String gpuTitle;
 	 private String hddTitle;

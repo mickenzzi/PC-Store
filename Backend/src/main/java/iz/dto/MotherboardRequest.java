@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MotherboardCompatibleDTO {
+public class MotherboardRequest {
 	private String ramTitle;
 	private String cpuTitle;
 }

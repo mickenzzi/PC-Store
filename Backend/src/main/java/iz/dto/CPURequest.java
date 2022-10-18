@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PSUCompatibleDTO {
-	private String gpuTitle;
+public class CPURequest {
+	private String moboTitle;
 }

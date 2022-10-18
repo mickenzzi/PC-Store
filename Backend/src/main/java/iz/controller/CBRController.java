@@ -2,7 +2,7 @@ package iz.controller;
 
 import java.util.List;
 
-import iz.dto.PCInputDTO;
+import iz.dto.PCRequest;
 import iz.service.CBR.CBRService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -47,7 +47,7 @@ public class CBRController {
 	private SSDService ssdService;
 	
 	@PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<PersonalComputer> FindSimilar(@RequestBody PCInputDTO dto){
+    public List<PersonalComputer> FindSimilar(@RequestBody PCRequest dto){
 		CPU cpu = cpuService.getOne(dto.getCpuTitle());
 		GPU gpu = gpuService.getOne(dto.getGpuTitle());
 		Motherboard mobo = motherboardService.getOne(dto.getMoboTitle());

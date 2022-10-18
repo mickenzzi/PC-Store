@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RAMCompatibleDTO {
+public class RAMRequest {
 	private String moboTitle;
 }
