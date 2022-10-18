@@ -18,24 +18,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/Motherboard")
+@RequestMapping("/api/motherboard")
 public class MotherboardController {
 
     @Autowired
     private MotherboardService motherboardService;
-    
-    @GetMapping(value = "{title}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Motherboard getOne(@PathVariable("title") String title){
-        return motherboardService.getOne(title);
-    }
-    
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Motherboard> getAll(){
+    public List<Motherboard> getAll() {
         return motherboardService.getAll();
     }
-    
+
+    @GetMapping(value = "{title}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Motherboard getOne(@PathVariable("title") String title) {
+        return motherboardService.getOne(title);
+    }
+
     @PostMapping(value = "compatible", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Motherboard> GetCompatibleMotherboards(@RequestBody MotherboardCompatibleDTO dto){
+    public List<Motherboard> GetCompatibleMotherboards(@RequestBody MotherboardCompatibleDTO dto) {
         return motherboardService.getCompatibleMotherBoards(dto);
     }
 }

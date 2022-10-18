@@ -19,26 +19,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/CPU")
+@RequestMapping("/api/cpu")
 public class CPUController {
 
     @Autowired
     private CPUService cpuService;
-    
-    @GetMapping(value = "{title}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CPU getOne(@PathVariable("title") String title){
-        return cpuService.getOne(title);
-    }
-    
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CPU> getAll(){
+    public List<CPU> getAll() {
         return cpuService.getAll();
     }
-    
+
+    @GetMapping(value = "{title}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CPU getOne(@PathVariable("title") String title) {
+        return cpuService.getOne(title);
+
+    }
+
     @PostMapping(value = "compatible", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CPU> getCompatibleCPU(@RequestBody CPUCompatibleDTO dto){
+    public List<CPU> getCompatibleCPU(@RequestBody CPUCompatibleDTO dto) {
         return cpuService.getCompatibleCPUS(dto.getMoboTitle());
     }
-    
-    
+
+
 }

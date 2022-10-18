@@ -15,19 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/SSD")
+@RequestMapping("/api/ssd")
 public class SSDController {
 
     @Autowired
     private SSDService ssdService;
-    
-    @GetMapping(value = "{title}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public SSD getOne(@PathVariable("title") String title){
-        return ssdService.getOne(title);
-    }
-    
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<SSD> getAll(){
+    public List<SSD> getAll() {
         return ssdService.getAll();
+    }
+
+    @GetMapping(value = "{title}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public SSD getOne(@PathVariable("title") String title) {
+        return ssdService.getOne(title);
     }
 }

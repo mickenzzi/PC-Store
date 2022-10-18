@@ -15,19 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/HDD")
+@RequestMapping("/api/hdd")
 public class HDDController {
 
     @Autowired
     private HDDService hddService;
-    
-    @GetMapping(value = "{title}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public HDD getOne(@PathVariable("title") String title){
-        return hddService.getOne(title);
-    }
-    
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<HDD> getAll(){
+    public List<HDD> getAll() {
         return hddService.getAll();
+    }
+
+    @GetMapping(value = "{title}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public HDD getOne(@PathVariable("title") String title) {
+        return hddService.getOne(title);
     }
 }

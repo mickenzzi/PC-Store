@@ -18,24 +18,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/RAM")
+@RequestMapping("/api/ram")
 public class RAMController {
 
     @Autowired
     private RAMService ramService;
-    
-    @GetMapping(value = "{title}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public RAM getOne(@PathVariable("title") String title){
-        return ramService.getOne(title);
-    }
-    
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<RAM> getAll(){
+    public List<RAM> getAll() {
         return ramService.getAll();
     }
-    
-    @PostMapping(value="compatible",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<RAM> getCompatibleRAM(@RequestBody RAMCompatibleDTO dto){
+
+    @GetMapping(value = "{title}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public RAM getOne(@PathVariable("title") String title) {
+        return ramService.getOne(title);
+    }
+
+    @PostMapping(value = "compatible", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<RAM> getCompatibleRAM(@RequestBody RAMCompatibleDTO dto) {
         return ramService.getCompatibleRAM(dto.getMoboTitle());
     }
 }

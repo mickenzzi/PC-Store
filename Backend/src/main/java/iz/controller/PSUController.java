@@ -17,23 +17,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/PSU")
+@RequestMapping("/api/psu")
 public class PSUController {
     @Autowired
     private PSUService psuService;
-    
-    @GetMapping(value = "{title}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public PSU getOne(@PathVariable("title") String title){
-        return psuService.getOne(title);
-    }
-    
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<PSU> getAll(){
+    public List<PSU> getAll() {
         return psuService.getAll();
     }
-    
-    @PostMapping(value="compatible",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<PSU> getCompatibleGPU(@RequestBody PSUCompatibleDTO dto){
+
+    @GetMapping(value = "{title}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public PSU getOne(@PathVariable("title") String title) {
+        return psuService.getOne(title);
+    }
+
+    @PostMapping(value = "compatible", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<PSU> getCompatibleGPU(@RequestBody PSUCompatibleDTO dto) {
         return psuService.getCompatiblePSU(dto.getGpuTitle());
     }
 }
