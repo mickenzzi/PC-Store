@@ -1,10 +1,7 @@
-package iz.controller;
+package IZ.controller;
 
 import java.util.List;
 
-import iz.dto.PSURequest;
-import iz.model.PSU;
-import iz.service.PSUService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,25 +12,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import IZ.dto.PSUCompatibleDTO;
+import IZ.model.PSU;
+import IZ.service.PSUService;
+
 @CrossOrigin
 @RestController
-@RequestMapping("/api/psu")
+@RequestMapping("/api/PSU")
 public class PSUController {
     @Autowired
     private PSUService psuService;
-
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<PSU> getAll() {
-        return psuService.getAll();
-    }
-
+    
     @GetMapping(value = "{title}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public PSU getOne(@PathVariable("title") String title) {
+    public PSU getOne(@PathVariable("title") String title){
         return psuService.getOne(title);
     }
-
-    @PostMapping(value = "compatible", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<PSU> getCompatibleGPU(@RequestBody PSURequest dto) {
+    
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<PSU> getAll(){
+        return psuService.getAll();
+    }
+    
+    @PostMapping(value="compatible",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<PSU> getCompatibleGPU(@RequestBody PSUCompatibleDTO dto){
         return psuService.getCompatiblePSU(dto.getGpuTitle());
     }
 }

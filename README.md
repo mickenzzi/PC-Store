@@ -5,7 +5,7 @@
  - Backend: Spring
 
 # Installation
- 1. Clone the repository https://github.com/vladakac/Inzenjering-znanja-PC.git
+ 1. Clone the repository https://github.com/mickenzzi/PC-Store.git
  2. Run fuseki server, with dataset labeled "iz" and import files "classes_xml" and "instances_xml"
 	- "pc_purpose_fcl" file describes fuzzy logic
 	- "malfunctions.net" file describes bayes logic

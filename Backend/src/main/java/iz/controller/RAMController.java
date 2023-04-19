@@ -1,8 +1,8 @@
-package iz.controller;
+package IZ.controller;
 
-import iz.dto.RAMRequest;
-import iz.model.RAM;
-import iz.service.RAMService;
+import IZ.dto.RAMCompatibleDTO;
+import IZ.model.RAM;
+import IZ.service.RAMService;
 
 import java.util.List;
 
@@ -18,24 +18,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/ram")
+@RequestMapping("/api/RAM")
 public class RAMController {
 
     @Autowired
     private RAMService ramService;
-
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<RAM> getAll() {
-        return ramService.getAll();
-    }
-
+    
     @GetMapping(value = "{title}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public RAM getOne(@PathVariable("title") String title) {
+    public RAM getOne(@PathVariable("title") String title){
         return ramService.getOne(title);
     }
-
-    @PostMapping(value = "compatible", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<RAM> getCompatibleRAM(@RequestBody RAMRequest dto) {
+    
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<RAM> getAll(){
+        return ramService.getAll();
+    }
+    
+    @PostMapping(value="compatible",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<RAM> getCompatibleRAM(@RequestBody RAMCompatibleDTO dto){
         return ramService.getCompatibleRAM(dto.getMoboTitle());
     }
 }

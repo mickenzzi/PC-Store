@@ -1,10 +1,8 @@
-package iz.service;
+package IZ.service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import iz.model.CPU;
-import iz.model.Motherboard;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
@@ -14,19 +12,22 @@ import org.apache.jena.query.ResultSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import iz.sparql.SparqlStaticFields;
+import IZ.model.CPU;
+import IZ.model.Motherboard;
+import IZ.sparql.SparqlStaticFields;
 
 @Service
 public class CPUService {
 	@Autowired
 	private MotherboardService motherboardService;
-
+	
 	public CPU getOne(String title) {
 		String selectString = SparqlStaticFields.Prefix +
 				"SELECT ?socket ?title ?cpu_core_clock ?cpu_core_count ?cpu_core_clock_boost ?cpu_series ?cpu_power_usage ?cpu_integrated_graphics \n" +
 			    "\tWHERE {\n" +
                 "?cpu rdf:type iz:CPU .\n" +
                 "?cpu iz:title \"" + title + "\".\n" +
+                "?cpu rdf:type iz:CPU .\n" +
                 "OPTIONAL {?cpu iz:title  ?title .}\n" +
                 "OPTIONAL {?cpu iz:socket  ?socket .}\n" +
                 "OPTIONAL {?cpu iz:cpu_core_clock ?cpu_core_clock .}\n" +
@@ -47,7 +48,7 @@ public class CPUService {
 			cpu.setSeries((solution.getLiteral("cpu_series") != null) ? solution.getLiteral("cpu_series").getString() : null);
 			cpu.setCoreCount((solution.getLiteral("cpu_core_count") != null) ? solution.getLiteral("cpu_core_count").getInt(): null);
 			cpu.setCoreClock((solution.getLiteral("cpu_core_clock") != null) ? solution.getLiteral("cpu_core_clock").getInt(): null);
-			cpu.setIntegratedGraphics(solution.getLiteral("cpu_integrated_graphics") == null || solution.getLiteral("cpu_integrated_graphics").getBoolean());
+			cpu.setIntegratedGraphics((solution.getLiteral("cpu_integrated_graphics") != null) ? solution.getLiteral("cpu_integrated_graphics").getBoolean() : null);
 			cpu.setCoreClockBoost((solution.getLiteral("cpu_core_clock_boost") != null) ? solution.getLiteral("cpu_core_clock_boost").getInt(): null);
 			cpu.setPowerUsage((solution.getLiteral("cpu_power_usage") != null) ? solution.getLiteral("cpu_power_usage").getInt(): null);
 		}
@@ -69,7 +70,7 @@ public class CPUService {
                 "OPTIONAL {?cpu iz:cpu_power_usage ?cpu_power_usage .}\n" +
                 "OPTIONAL {?cpu iz:cpu_integrated_graphics ?cpu_integrated_graphics .}\n" +
                 "}";
-		List<CPU> cpus = new ArrayList<>();
+		List<CPU> cpus = new ArrayList<CPU>();
 		Query query = QueryFactory.create(selectString);
 		QueryExecution q = QueryExecutionFactory.sparqlService(SparqlStaticFields.SELECT_URL, query);
 		ResultSet results = q.execSelect();
@@ -81,7 +82,7 @@ public class CPUService {
 			cpu.setSeries((solution.getLiteral("cpu_series") != null) ? solution.getLiteral("cpu_series").getString() : null);
 			cpu.setCoreCount((solution.getLiteral("cpu_core_count") != null) ? solution.getLiteral("cpu_core_count").getInt(): null);
 			cpu.setCoreClock((solution.getLiteral("cpu_core_clock") != null) ? solution.getLiteral("cpu_core_clock").getInt(): null);
-			cpu.setIntegratedGraphics(solution.getLiteral("cpu_integrated_graphics") == null || solution.getLiteral("cpu_integrated_graphics").getBoolean());
+			cpu.setIntegratedGraphics((solution.getLiteral("cpu_integrated_graphics") != null) ? solution.getLiteral("cpu_integrated_graphics").getBoolean() : null);
 			cpu.setCoreClockBoost((solution.getLiteral("cpu_core_clock_boost") != null) ? solution.getLiteral("cpu_core_clock_boost").getInt(): null);
 			cpu.setPowerUsage((solution.getLiteral("cpu_power_usage") != null) ? solution.getLiteral("cpu_power_usage").getInt(): null);
 			cpus.add(cpu);
@@ -95,9 +96,10 @@ public class CPUService {
 		if(socket.contains("4")) {
 			socket = "AM4";
 		}
-		List<CPU> cpus = new ArrayList<>();
-		for(CPU cpu: getAll()) {
-			if(cpu.getSocket().equals(socket)) {
+		List<CPU> all = getAll();
+		List<CPU> cpus = new ArrayList<CPU>();
+		for(CPU cpu: all) {
+			if(cpu.getSocket().equals(socket.toString())) {
 				cpus.add(cpu);
 			}
 		}

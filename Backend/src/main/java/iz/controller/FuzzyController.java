@@ -1,10 +1,7 @@
-package iz.controller;
+package IZ.controller;
 
-import iz.dto.FuzzyDTO;
-import iz.dto.FuzzyInputDTO;
-import iz.dto.FuzzyOutputDTO;
-import iz.sparql.SparqlStaticFields;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +19,11 @@ import org.apache.jena.query.ResultSet;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import IZ.dto.FuzzyOutputDTO;
+import IZ.sparql.SparqlStaticFields;
+import IZ.dto.FuzzyDTO;
+import IZ.dto.FuzzyInputDTO;
+
 import org.springframework.http.MediaType;
 
 @CrossOrigin
@@ -36,7 +38,7 @@ public class FuzzyController {
 	
 	@PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public FuzzyOutputDTO Fuzzy(@RequestBody FuzzyInputDTO dto){
-        String sparqlQuery = SparqlStaticFields.Prefix +
+        String sparqlQuery = SparqlStaticFields.Prefix + 
         		"SELECT  ?cpu_core_count ?gpu_memory ?ram_memory ?storage_capacity ?storage_sata_speed \n" +
         		"\tWHERE {\n" +
         		"?cpu rdf:type iz:CPU .\n" +

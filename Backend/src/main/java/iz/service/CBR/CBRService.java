@@ -1,4 +1,4 @@
-package iz.service.CBR;
+package IZ.service.CBR;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,13 +7,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import iz.model.CPU;
-import iz.model.GPU;
-import iz.model.HDD;
-import iz.model.Motherboard;
-import iz.model.PersonalComputer;
-import iz.model.RAM;
-import iz.model.SSD;
+import IZ.model.CPU;
+import IZ.model.GPU;
+import IZ.model.HDD;
+import IZ.model.Motherboard;
+import IZ.model.PersonalComputer;
+import IZ.model.RAM;
+import IZ.model.SSD;
 import ucm.gaia.jcolibri.casebase.LinealCaseBase;
 import ucm.gaia.jcolibri.cbraplications.StandardCBRApplication;
 import ucm.gaia.jcolibri.cbrcore.Attribute;
@@ -33,15 +33,11 @@ import ucm.gaia.jcolibri.method.retrieve.selection.SelectCases;
 @Service
 public class CBRService implements StandardCBRApplication {
 	@Autowired
-	private final SparqlConnector connector;
+	private SparqlConnector connector;
 	private Connector _connector;
 	private CBRCaseBase _caseBase;
 	private NNConfig _simConfig;
 	private List<PersonalComputer> result;
-
-	public CBRService(SparqlConnector connector) {
-		this.connector = connector;
-	}
 
 	@Override
 	public void configure() throws ExecutionException {

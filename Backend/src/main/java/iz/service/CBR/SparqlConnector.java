@@ -1,4 +1,4 @@
-package iz.service.CBR;
+package IZ.service.CBR;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -8,46 +8,38 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import iz.model.CPU;
-import iz.model.GPU;
-import iz.model.HDD;
-import iz.model.Motherboard;
-import iz.model.PersonalComputer;
-import iz.model.RAM;
-import iz.model.SSD;
-import iz.service.CPUService;
-import iz.service.GPUService;
-import iz.service.HDDService;
-import iz.service.MotherboardService;
-import iz.service.RAMService;
-import iz.service.SSDService;
+import IZ.model.CPU;
+import IZ.model.GPU;
+import IZ.model.HDD;
+import IZ.model.Motherboard;
+import IZ.model.PersonalComputer;
+import IZ.model.RAM;
+import IZ.model.SSD;
+import IZ.service.CPUService;
+import IZ.service.GPUService;
+import IZ.service.HDDService;
+import IZ.service.MotherboardService;
+import IZ.service.RAMService;
+import IZ.service.SSDService;
 import ucm.gaia.jcolibri.cbrcore.CBRCase;
 import ucm.gaia.jcolibri.cbrcore.CaseBaseFilter;
 import ucm.gaia.jcolibri.cbrcore.Connector;
+import ucm.gaia.jcolibri.exception.InitializingException;
 
 @Service
 public class SparqlConnector implements Connector {
 	@Autowired
-	private final CPUService cpuService;
+	private CPUService cpuService;
 	@Autowired
-	private final GPUService gpuService;
+	private GPUService gpuService;
 	@Autowired
-	private final HDDService hddService;
+	private HDDService hddService;
 	@Autowired
-	private final MotherboardService motherboardService;
+	private MotherboardService motherboardService;
 	@Autowired
-	private final RAMService ramService;
+	private RAMService ramService;
 	@Autowired
-	private final SSDService ssdService;
-
-	public SparqlConnector(CPUService cpuService, GPUService gpuService, HDDService hddService, MotherboardService motherboardService, RAMService ramService, SSDService ssdService) {
-		this.cpuService = cpuService;
-		this.gpuService = gpuService;
-		this.hddService = hddService;
-		this.motherboardService = motherboardService;
-		this.ramService = ramService;
-		this.ssdService = ssdService;
-	}
+	private SSDService ssdService;
 
 	@Override
 	public void close() {
@@ -62,7 +54,7 @@ public class SparqlConnector implements Connector {
 	}
 
 	@Override
-	public void initFromXMLfile(URL arg0) {
+	public void initFromXMLfile(URL arg0) throws InitializingException {
 		// TODO Auto-generated method stub
 
 	}
@@ -70,13 +62,13 @@ public class SparqlConnector implements Connector {
 	@Override
 	public Collection<CBRCase> retrieveAllCases() {
 		int ct = 0;
-		List<CBRCase> cbrs = new ArrayList<>();
-		List<CPU> cpuList;
-		List<GPU> gpuList;
-		List<HDD> hddList;
-		List<Motherboard> moboList;
-		List<RAM> ramList;
-		List<SSD> ssdList;
+		List<CBRCase> cbrs = new ArrayList<CBRCase>();
+		List<CPU> cpuList = new ArrayList<CPU>();
+		List<GPU> gpuList = new ArrayList<GPU>();
+		List<HDD> hddList = new ArrayList<HDD>();
+		List<Motherboard> moboList = new ArrayList<Motherboard>();
+		List<RAM> ramList = new ArrayList<RAM>();
+		List<SSD> ssdList = new ArrayList<SSD>();
 
 		cpuList = cpuService.getAll();
 		gpuList = gpuService.getAll();
@@ -91,13 +83,17 @@ public class SparqlConnector implements Connector {
 			pc.setCpu(cpu);
 			if (ct >= gpuList.size()) {
 				pc.setGpu(gpuList.get(0));
+				;
 			} else {
 				pc.setGpu(gpuList.get(ct));
+				;
 			}
 			if (ct >= hddList.size()) {
 				pc.setHdd(hddList.get(0));
+				;
 			} else {
 				pc.setHdd(hddList.get(ct));
+				;
 			}
 			if (ct >= moboList.size()) {
 				pc.setMotherboard(moboList.get(0));

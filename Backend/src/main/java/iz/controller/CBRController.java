@@ -1,9 +1,7 @@
-package iz.controller;
+package IZ.controller;
 
 import java.util.List;
 
-import iz.dto.PCRequest;
-import iz.service.CBR.CBRService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -13,19 +11,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.http.MediaType;
 
-import iz.model.CPU;
-import iz.model.GPU;
-import iz.model.HDD;
-import iz.model.Motherboard;
-import iz.model.PersonalComputer;
-import iz.model.RAM;
-import iz.model.SSD;
-import iz.service.CPUService;
-import iz.service.GPUService;
-import iz.service.HDDService;
-import iz.service.MotherboardService;
-import iz.service.RAMService;
-import iz.service.SSDService;
+import IZ.dto.PCInputDTO;
+import IZ.model.CPU;
+import IZ.model.GPU;
+import IZ.model.HDD;
+import IZ.model.Motherboard;
+import IZ.model.PersonalComputer;
+import IZ.model.RAM;
+import IZ.model.SSD;
+import IZ.service.CPUService;
+import IZ.service.GPUService;
+import IZ.service.HDDService;
+import IZ.service.MotherboardService;
+import IZ.service.RAMService;
+import IZ.service.SSDService;
+import IZ.service.CBR.CBRService;
 
 @CrossOrigin
 @RestController
@@ -47,7 +47,7 @@ public class CBRController {
 	private SSDService ssdService;
 	
 	@PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<PersonalComputer> FindSimilar(@RequestBody PCRequest dto){
+    public List<PersonalComputer> FindSimilar(@RequestBody PCInputDTO dto){
 		CPU cpu = cpuService.getOne(dto.getCpuTitle());
 		GPU gpu = gpuService.getOne(dto.getGpuTitle());
 		Motherboard mobo = motherboardService.getOne(dto.getMoboTitle());

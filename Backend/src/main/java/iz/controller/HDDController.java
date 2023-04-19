@@ -1,7 +1,7 @@
-package iz.controller;
+package IZ.controller;
 
-import iz.model.HDD;
-import iz.service.HDDService;
+import IZ.model.HDD;
+import IZ.service.HDDService;
 
 import java.util.List;
 
@@ -15,19 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/hdd")
+@RequestMapping("/api/HDD")
 public class HDDController {
 
     @Autowired
     private HDDService hddService;
-
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<HDD> getAll() {
-        return hddService.getAll();
-    }
-
+    
     @GetMapping(value = "{title}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public HDD getOne(@PathVariable("title") String title) {
+    public HDD getOne(@PathVariable("title") String title){
         return hddService.getOne(title);
+    }
+    
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<HDD> getAll(){
+        return hddService.getAll();
     }
 }

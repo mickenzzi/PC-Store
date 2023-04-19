@@ -1,4 +1,4 @@
-package iz.model;
+package IZ.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

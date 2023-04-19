@@ -1,7 +1,7 @@
-package iz.controller;
+package IZ.controller;
 
-import iz.model.SSD;
-import iz.service.SSDService;
+import IZ.model.SSD;
+import IZ.service.SSDService;
 
 import java.util.List;
 
@@ -15,19 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/ssd")
+@RequestMapping("/api/SSD")
 public class SSDController {
 
     @Autowired
     private SSDService ssdService;
-
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<SSD> getAll() {
-        return ssdService.getAll();
-    }
-
+    
     @GetMapping(value = "{title}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public SSD getOne(@PathVariable("title") String title) {
+    public SSD getOne(@PathVariable("title") String title){
         return ssdService.getOne(title);
+    }
+    
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<SSD> getAll(){
+        return ssdService.getAll();
     }
 }

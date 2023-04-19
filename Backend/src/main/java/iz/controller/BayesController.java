@@ -1,9 +1,9 @@
-package iz.controller;
+package IZ.controller;
 
-import iz.model.enums.Cause;
-import iz.model.enums.Malfunction;
-import iz.model.enums.Symptom;
-import iz.dto.*;
+import IZ.Enum.Causes;
+import IZ.Enum.Malfunctions;
+import IZ.Enum.Symptoms;
+import IZ.dto.*;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import unbbayes.io.BaseIO;
@@ -38,23 +38,23 @@ public class BayesController {
         algorithm.run();
 
         for (String symptom : dto.getComputerSymptomsList()){
-            ((ProbabilisticNode)net.getNode(Symptom.getNodeName(Symptom.valueOf(symptom)))).addFinding(0);
+            ((ProbabilisticNode)net.getNode(Symptoms.getNodeName(Symptoms.valueOf(symptom)))).addFinding(0);
         }
 
         for (String cause : dto.getMalfunctionCausesList()) {
-            ((ProbabilisticNode)net.getNode(Cause.getNodeName(Cause.valueOf(cause)))).addFinding(0);
+            ((ProbabilisticNode)net.getNode(Causes.getNodeName(Causes.valueOf(cause)))).addFinding(0);
         }
 
-        for (Cause cause : Cause.values()){
+        for (Causes cause : Causes.values()){
             boolean found = false;
             for(String inDto : dto.getMalfunctionCausesList()){
-                if (cause == Cause.valueOf(inDto)){
+                if (cause == Causes.valueOf(inDto)){
                     found = true;
                     break;
                 }
             }
             if(found) continue;
-            ((ProbabilisticNode)net.getNode(Cause.getNodeName(cause))).addFinding(1);
+            ((ProbabilisticNode)net.getNode(Causes.getNodeName(cause))).addFinding(1);
         }
 
         try {
@@ -63,16 +63,17 @@ public class BayesController {
             System.out.println(e.getMessage());
         }
 
-        Malfunction[] allMalfunctions = Malfunction.values();
+        Malfunctions[] allMalfunctions = Malfunctions.values();
         BayesResultDTO malfunctions = new BayesResultDTO();
-        for(Malfunction malfunction : allMalfunctions){
-            ProbabilisticNode node = (ProbabilisticNode) net.getNode(Malfunction.getNodeName(malfunction));
+        for(Malfunctions malfunction : allMalfunctions){
+            ProbabilisticNode node = (ProbabilisticNode) net.getNode(Malfunctions.getNodeName(malfunction));
             if (node.getMarginalAt(0) > 0)
                 malfunctions.getResults().
-                        add(new BayesResponseDTO(Malfunction.toString(malfunction), node.getMarginalAt(0)));
+                        add(new BayesResponseDTO(Malfunctions.toString(malfunction), node.getMarginalAt(0)));
         }
         malfunctions.getResults().sort(Comparator.comparing(BayesResponseDTO::getProbability).reversed());
 
+        //Zakomentarisati ukoliko treba neizvesno da se prikazu procenti
         float percentSum = 0;
         for (int i = 0; i < malfunctions.getResults().size(); i++) {
             BayesResponseDTO bayes = malfunctions.getResults().get(i);
@@ -94,7 +95,7 @@ public class BayesController {
     @GetMapping(value = "symptoms",produces = MediaType.APPLICATION_JSON_VALUE)
     public SymptomsDTO GetSymptoms(){
         SymptomsDTO symptomsDTO = new SymptomsDTO();
-        symptomsDTO.setSymptomsList(Stream.of(Symptom.values())
+        symptomsDTO.setSymptomsList(Stream.of(Symptoms.values())
                 .map(Enum::name)
                 .collect(Collectors.toList()));
         return symptomsDTO;
@@ -103,7 +104,7 @@ public class BayesController {
     @GetMapping(value = "causes",produces = MediaType.APPLICATION_JSON_VALUE)
     public CausesDTO GetCauses(){
         CausesDTO causesDTO = new CausesDTO();
-        causesDTO.setCausesList(Stream.of(Cause.values())
+        causesDTO.setCausesList(Stream.of(Causes.values())
                 .map(Enum::name)
                 .collect(Collectors.toList()));
         return causesDTO;

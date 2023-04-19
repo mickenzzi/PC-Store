@@ -1,8 +1,8 @@
-package iz.controller;
+package IZ.controller;
 
-import iz.dto.MotherboardRequest;
-import iz.model.Motherboard;
-import iz.service.MotherboardService;
+import IZ.dto.MotherboardCompatibleDTO;
+import IZ.model.Motherboard;
+import IZ.service.MotherboardService;
 
 import java.util.List;
 
@@ -18,24 +18,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/motherboard")
+@RequestMapping("/api/Motherboard")
 public class MotherboardController {
 
     @Autowired
     private MotherboardService motherboardService;
-
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Motherboard> getAll() {
-        return motherboardService.getAll();
-    }
-
+    
     @GetMapping(value = "{title}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Motherboard getOne(@PathVariable("title") String title) {
+    public Motherboard getOne(@PathVariable("title") String title){
         return motherboardService.getOne(title);
     }
-
+    
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Motherboard> getAll(){
+        return motherboardService.getAll();
+    }
+    
     @PostMapping(value = "compatible", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Motherboard> GetCompatibleMotherboards(@RequestBody MotherboardRequest dto) {
+    public List<Motherboard> GetCompatibleMotherboards(@RequestBody MotherboardCompatibleDTO dto){
         return motherboardService.getCompatibleMotherBoards(dto);
     }
 }

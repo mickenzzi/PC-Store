@@ -1,11 +1,11 @@
-package iz.dto;
+package IZ.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class MotherboardRequest {
+public class MotherboardCompatibleDTO {
 	private String ramTitle;
 	private String cpuTitle;
 }

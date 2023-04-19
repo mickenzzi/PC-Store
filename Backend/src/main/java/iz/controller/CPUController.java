@@ -1,8 +1,8 @@
-package iz.controller;
+package IZ.controller;
 
-import iz.dto.CPURequest;
-import iz.model.CPU;
-import iz.service.CPUService;
+import IZ.dto.CPUCompatibleDTO;
+import IZ.model.CPU;
+import IZ.service.CPUService;
 
 import java.util.List;
 
@@ -19,27 +19,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/cpu")
+@RequestMapping("/api/CPU")
 public class CPUController {
 
     @Autowired
     private CPUService cpuService;
-
+    
+    @GetMapping(value = "{title}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CPU getOne(@PathVariable("title") String title){
+        return cpuService.getOne(title);
+    }
+    
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CPU> getAll() {
+    public List<CPU> getAll(){
         return cpuService.getAll();
     }
-
-    @GetMapping(value = "{title}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CPU getOne(@PathVariable("title") String title) {
-        return cpuService.getOne(title);
-
-    }
-
+    
     @PostMapping(value = "compatible", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CPU> getCompatibleCPU(@RequestBody CPURequest dto) {
+    public List<CPU> getCompatibleCPU(@RequestBody CPUCompatibleDTO dto){
         return cpuService.getCompatibleCPUS(dto.getMoboTitle());
     }
-
-
+    
+    
 }

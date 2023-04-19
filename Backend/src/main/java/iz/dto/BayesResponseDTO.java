@@ -1,4 +1,4 @@
-package iz.dto;
+package IZ.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

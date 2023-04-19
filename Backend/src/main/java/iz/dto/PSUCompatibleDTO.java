@@ -1,10 +1,10 @@
-package iz.dto;
+package IZ.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class PSURequest {
+public class PSUCompatibleDTO {
 	private String gpuTitle;
 }

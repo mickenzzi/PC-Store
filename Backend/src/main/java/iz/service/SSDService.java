@@ -1,9 +1,8 @@
-package iz.service;
+package IZ.service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import iz.model.SSD;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
@@ -12,7 +11,8 @@ import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.springframework.stereotype.Service;
 
-import iz.sparql.SparqlStaticFields;
+import IZ.model.SSD;
+import IZ.sparql.SparqlStaticFields;
 
 @Service
 public class SSDService {
@@ -55,7 +55,7 @@ public class SSDService {
 	                "OPTIONAL {?ssd iz:storage_rpm ?storage_rpm .}\n" +
 	                "OPTIONAL {?ssd iz:storage_sata_speed ?storage_sata_speed .}\n" +
 	                "}";
-	        List<SSD> ssdList = new ArrayList<>();
+	        List<SSD> ssdList = new ArrayList<SSD>();
 	        Query query = QueryFactory.create(selectString);
 	        QueryExecution q = QueryExecutionFactory.sparqlService(SparqlStaticFields.SELECT_URL, query);
 	        ResultSet results = q.execSelect();

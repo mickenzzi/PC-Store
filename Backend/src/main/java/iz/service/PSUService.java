@@ -1,10 +1,8 @@
-package iz.service;
+package IZ.service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import iz.model.GPU;
-import iz.model.PSU;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
@@ -14,7 +12,9 @@ import org.apache.jena.query.ResultSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import iz.sparql.SparqlStaticFields;
+import IZ.model.GPU;
+import IZ.model.PSU;
+import IZ.sparql.SparqlStaticFields;
 
 @Service
 public class PSUService {
@@ -27,6 +27,7 @@ public class PSUService {
 			    "\tWHERE {\n" +
                 "?psu rdf:type iz:PSU .\n" +
                 "?psu iz:title \"" + title + "\".\n" +
+                "?psu rdf:type iz:PSU .\n" +
                 "OPTIONAL {?psu iz:title  ?title .}\n" +
                 "OPTIONAL {?psu iz:psu_wattage  ?psu_wattage .}\n" +
                 "OPTIONAL {?psu iz:psu_type ?psu_type .}\n" +

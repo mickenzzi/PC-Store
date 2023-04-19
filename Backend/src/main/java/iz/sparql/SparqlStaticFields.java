@@ -1,4 +1,4 @@
-package iz.sparql;
+package IZ.sparql;
 
 public class SparqlStaticFields {
 

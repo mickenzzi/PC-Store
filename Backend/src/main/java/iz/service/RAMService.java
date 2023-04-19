@@ -1,10 +1,8 @@
-package iz.service;
+package IZ.service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import iz.model.Motherboard;
-import iz.model.RAM;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
@@ -14,13 +12,15 @@ import org.apache.jena.query.ResultSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import iz.sparql.SparqlStaticFields;
+import IZ.model.Motherboard;
+import IZ.model.RAM;
+import IZ.sparql.SparqlStaticFields;
 
 @Service
 public class RAMService {
 	@Autowired
 	private MotherboardService motherboardService;
-
+	
 	public RAM getOne(String title) {
 		String selectString = SparqlStaticFields.Prefix +
 				"SELECT ?title ?ram_type ?ram_speed ?ram_memory ?rgb \n" +
@@ -44,7 +44,7 @@ public class RAMService {
 			ram.setType((solution.getLiteral("ram_type") != null) ? solution.getLiteral("ram_type").getString(): null);
 			ram.setSpeed((solution.getLiteral("ram_speed") != null) ? solution.getLiteral("ram_speed").getInt() : null);
 			ram.setMemory((solution.getLiteral("ram_memory") != null) ? solution.getLiteral("ram_memory").getInt(): null);
-			ram.setRgb(solution.getLiteral("rgb") == null || solution.getLiteral("rgb").getBoolean());
+			ram.setRgb((solution.getLiteral("rgb") != null) ? solution.getLiteral("rgb").getBoolean(): null);
 		}
 		return ram;
 	}
@@ -60,7 +60,7 @@ public class RAMService {
                 "OPTIONAL {?ram iz:ram_memory ?ram_memory .}\n" +
                 "OPTIONAL {?ram iz:rgb ?rgb .}\n" +
                 "}";
-		List<RAM> ramList = new ArrayList<>();
+		List<RAM> ramList = new ArrayList<RAM>();
 		Query query = QueryFactory.create(selectString);
 		QueryExecution q = QueryExecutionFactory.sparqlService(SparqlStaticFields.SELECT_URL, query);
 		ResultSet results = q.execSelect();
@@ -71,7 +71,7 @@ public class RAMService {
 			ram.setType((solution.getLiteral("ram_type") != null) ? solution.getLiteral("ram_type").getString(): null);
 			ram.setSpeed((solution.getLiteral("ram_speed") != null) ? solution.getLiteral("ram_speed").getInt() : null);
 			ram.setMemory((solution.getLiteral("ram_memory") != null) ? solution.getLiteral("ram_memory").getInt(): null);
-			ram.setRgb(solution.getLiteral("rgb") == null || solution.getLiteral("rgb").getBoolean());
+			ram.setRgb((solution.getLiteral("rgb") != null) ? solution.getLiteral("rgb").getBoolean(): null);
 			if(ram.getMemory() != null) {
 				ramList.add(ram);
 			}
@@ -93,7 +93,8 @@ public class RAMService {
                 "OPTIONAL {?ram iz:ram_memory ?ram_memory .}\n" +
                 "OPTIONAL {?ram iz:rgb ?rgb .}\n" +
                 "}";
-		List<RAM> ramList = new ArrayList<>();
+		System.out.println("AAAAAAAAAAAAAAAAA" + selectString);
+		List<RAM> ramList = new ArrayList<RAM>();
 		Query query = QueryFactory.create(selectString);
 		QueryExecution q = QueryExecutionFactory.sparqlService(SparqlStaticFields.SELECT_URL, query);
 		ResultSet results = q.execSelect();
@@ -104,7 +105,7 @@ public class RAMService {
 			ram.setType((solution.getLiteral("ram_type") != null) ? solution.getLiteral("ram_type").getString(): null);
 			ram.setSpeed((solution.getLiteral("ram_speed") != null) ? solution.getLiteral("ram_speed").getInt() : null);
 			ram.setMemory((solution.getLiteral("ram_memory") != null) ? solution.getLiteral("ram_memory").getInt(): null);
-			ram.setRgb(solution.getLiteral("rgb") == null || solution.getLiteral("rgb").getBoolean());
+			ram.setRgb((solution.getLiteral("rgb") != null) ? solution.getLiteral("rgb").getBoolean(): null);
 			if(ram.getMemory() != null) {
 				ramList.add(ram);
 			}
